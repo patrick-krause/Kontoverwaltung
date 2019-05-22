@@ -88,7 +88,7 @@ public abstract class Konto {
 
         String lResult = "";
         // 10 mal Zufallszahl
-        for(int i=0; i<=10; i++) {
+        for(int i=0; i<10; i++) {
             // Zufallszahl zwischen 0 & 9
             lResult += (int)(Math.random()*10);
         }
