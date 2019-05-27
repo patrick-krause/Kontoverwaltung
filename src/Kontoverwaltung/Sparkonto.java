@@ -41,14 +41,9 @@ public class Sparkonto extends Konto {
 
         // Nun berechnen wir die Zinsen für jeden Monat
         for(int i = 0; i < diffMonths; i++) {
-            //System.out.println("Kontostand nach "+i+ "Monaten:"+getSaldo());
-            //System.out.println("gerundeter Kontostand nach "+i+ " Monaten:"+round(getSaldo()));
             int zins = round(this.Saldo * this.Sparzins/100);
             zinsbetrag += zins;
-            //int test = (int) (getSaldo() + zins);
             setSaldo( getSaldo() + zins );
-            //System.out.println(test);
-            //System.out.println(zins);
         }
 
         // Und geben den Zinsbetrag aus

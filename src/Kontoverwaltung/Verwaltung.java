@@ -11,7 +11,7 @@ public class Verwaltung {
     // Liste aller Konten zur Laufzeit
     private static ArrayList<Konto> Konten = new ArrayList<Konto>();
     // Name der csv-Datei, in der alle Konten gespeichert werden
-    private static final String FILE_NAME = "C:\\Users\\Patrick\\Documents\\AWE Java\\Konten.txt";
+    private static final String FILE_NAME = "Konten.csv";
 
     public static void main(String[] args) {
 
@@ -36,38 +36,6 @@ public class Verwaltung {
         // Menü aufbauen
        showMenu();
 
-
-
-
-
-
-        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-        // Testweise Konten erstellen und einfügen
-        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-
-//        //Girokonto konto1 = new Girokonto("Patrick Krause", 50.1389, 1000.0);
-//        Girokonto konto1 = (Girokonto)Konten.get(0);
-//        konto1.Auszahlung(20);
-//
-//        Sparkonto konto2 = new Sparkonto("Max Mustermann", 112.66, 1.2);
-//        // Format yyyMMdd
-//        konto2.setEroeffnungsdatum(LocalDate.of(2018,5,10));
-//
-//        Konten.add(konto2);
-//
-//        //konto2.berechneZinsen();
-//        System.out.println("neuer Kontostand nach Zinsen: " + konto2.getSaldo() + "€");
-//
-//        konto2.ueberweisung(konto1, 30);
-//
-//        konto2.kontoauszug();
-
-        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-        // Ende des Tests
-        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-
-        // Konten speichern
-        save();
     }
 
     // Lädt alle Konten aus einer csv-Datei
@@ -136,8 +104,12 @@ public class Verwaltung {
         System.out.println("2 Neues Konto anlegen");
         System.out.println("3 Konto bearbeiten");
         System.out.println("4 Konto löschen");
+        System.out.println("5 Kontoauszug");
+        System.out.println("6 Überweisung");
+        System.out.println("7 Einzahlung");
+        System.out.println("8 Auszahlung");
         System.out.println();
-        System.out.println("5 Programm beenden");
+        System.out.println("9 Programm beenden");
 
         // Eingaben auswerten
         Scanner in = new Scanner(System.in);
@@ -165,17 +137,35 @@ public class Verwaltung {
             case("B"):
             case("b"):
                 System.out.println("Konto bearbeiten");
-               // showEditDialog();
+               showEditDialog();
                 break;
             case("4"):
             case("L"):
             case("l"):
                 System.out.println("Konto löschen");
-               // showDeleteDialog();
+               showDeleteDialog();
                 break;
             case("5"):
+                System.out.println("Kontoauszug");
+                showKontoauszugDialog();
+                break;
+            case("6"):
+                System.out.println("Überweisung");
+                showTransactionDialog();
+                break;
+            case("7"):
+                System.out.println("Einzahlung");
+                showAuszahlungDialog(true);
+                break;
+            case("8"):
+                System.out.println("Auszahlung");
+                showAuszahlungDialog(false);
+                break;
+            case("9"):
             case("E"):
             case("e"):
+                // Speichern und Schließen
+                save();
                 System.exit(0);
             default:
                 System.out.println("Eingabe nicht erkannt!");
@@ -199,7 +189,7 @@ public class Verwaltung {
             // Eingaben auswerten
             Scanner in = new Scanner(System.in);
             String e = in.nextLine();
-            if(e == "N" || e == "n"){
+            if(e.equals("N") || e.equals("n")){
                 showNewDialog();
             }
             else{
@@ -211,6 +201,70 @@ public class Verwaltung {
             for (Konto lKonto : Konten) {
                 System.out.println(lKonto.Kontonummer + " [" + lKonto.Inhaber + "]");
             }
+            System.out.println();
+            System.out.println();
+            System.out.println("2 Neues Konto anlegen");
+            System.out.println("3 Konto bearbeiten");
+            System.out.println("4 Konto löschen");
+            System.out.println("5 Kontoauszug");
+            System.out.println("6 Überweisung");
+            System.out.println("7 Einzahlung");
+            System.out.println("8 Auszahlung");
+            System.out.println();
+            System.out.println("9 Programm beenden");
+
+            // Eingaben auswerten
+            Scanner in = new Scanner(System.in);
+            String e = in.nextLine();
+            switch(e) {
+                case("2"):
+                case("N"):
+                case("n"):
+                    System.out.println("Neues Konto anlegen");
+                    showNewDialog();
+                    break;
+                case("3"):
+                case("B"):
+                case("b"):
+                    System.out.println("Konto bearbeiten");
+                    showEditDialog();
+                    break;
+                case("4"):
+                case("L"):
+                case("l"):
+                    System.out.println("Konto löschen");
+                    showDeleteDialog();
+                    break;
+                case("5"):
+                    System.out.println("Kontoauszug");
+                    showKontoauszugDialog();
+                    break;
+                case("6"):
+                    System.out.println("Überweisung");
+                    showTransactionDialog();
+                    break;
+                case("7"):
+                    System.out.println("Einzahlung");
+                    showAuszahlungDialog(true);
+                    break;
+                case("8"):
+                    System.out.println("Auszahlung");
+                    showAuszahlungDialog(false);
+                    break;
+                case("9"):
+                case("E"):
+                case("e"):
+                    // Speichern und Schließen
+                    save();
+                    System.exit(0);
+                default:
+                    System.out.println("Eingabe nicht erkannt!");
+                    System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+                    String s = in.nextLine();
+                    showMenu();
+                    break;
+            }
+
         }
     }
 
@@ -223,6 +277,433 @@ public class Verwaltung {
         System.out.println("Kontotyp auswählen:");
         System.out.println("1 Girokonto");
         System.out.println("2 Sparkonto");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String s = in.nextLine();
+
+        if(s.equals("1")){
+            showNewGiroDialog();
+        }
+        if(s.equals("2")){
+            showNewSparDialog();
+        }
+        else{
+            System.out.println("Eingabe nicht erkannt!");
+            System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+            String e = in.nextLine();
+            showMenu();
+        }
+    }
+
+    private static void showNewGiroDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Girokonto");
+        System.out.println();
+        System.out.println("Kontoinhaber angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String name = in.nextLine();
+        // Eingabe nur gültig, wenn nur Text eingegeben wurde
+        while(!name.matches("[a-zA-Z ]+")) {
+            System.out.println("Bitte einen gültigen Namen eingeben!");
+            name = in.nextLine();
+        }
+
+        System.out.println();
+        System.out.println("Saldo angeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Saldo angeben!");
+            in.nextLine();
+        }
+        double saldo = in.nextDouble();
+
+        System.out.println();
+        System.out.println("Dispo angeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Dispo angeben!");
+            in.nextLine();
+        }
+        double dispo = in.nextDouble();
+
+        Konten.add(new Girokonto(name, saldo, dispo));
+
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String e = in.nextLine();
+        showMenu();
+
+    }
+
+    private static void showNewSparDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Sparkonto");
+        System.out.println();
+        System.out.println("Kontoinhaber angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String name = in.nextLine();
+        // Eingabe nur gültig, wenn nur Text eingegeben wurde
+        while(!name.matches("[a-zA-Z ]+")) {
+            System.out.println("Bitte einen gültigen Namen eingeben!");
+            name = in.nextLine();
+        }
+
+        System.out.println();
+        System.out.println("Saldo angeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Saldo angeben!");
+            in.nextLine();
+        }
+        double saldo = in.nextDouble();
+
+        System.out.println();
+        System.out.println("Sparzins angeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Zinssatz angeben!");
+            in.nextLine();
+        }
+        double zins = in.nextDouble();
+
+        Konten.add(new Sparkonto(name, saldo, zins));
+
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String e = in.nextLine();
+        showMenu();
+
+    }
+
+    private static void showEditDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Bitte die Kontonummer des zu bearbeitenden Kontos angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String nummer = in.nextLine();
+
+        // Ist das gesuchte Konto vorhanden?
+        Konto lKonto = null;
+
+        for(Konto konto : Konten){
+            if(konto.getKontonummer().equals(nummer)){
+                lKonto = konto;
+                break;
+            }
+        }
+
+        if(lKonto != null){
+             showEditKontoDialog(lKonto);
+        }
+        else{
+            System.out.println("Gesuchtes Konto nicht vorhanden");
+            System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+            String s = in.nextLine();
+            showMenu();
+        }
+
+    }
+
+    private static void showEditKontoDialog(Konto pKonto){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        // Alle Properties des Kontos anzeigen
+        System.out.println("Konto[" + pKonto.getKontonummer() + "]:");
+        System.out.print("1 Inhaber:              ");
+        System.out.println(pKonto.getInhaber());
+        System.out.print("2 Saldo:                ");
+        System.out.println(pKonto.getSaldo());
+        System.out.print("  Eröffnungsdatum:      ");
+        System.out.println(pKonto.getEroeffnungsdatum());
+
+        // Je nach Kontotyp die weiteren Properties anzeigen
+        if(pKonto.getClass().getName().equals("Kontoverwaltung.Girokonto")){
+            System.out.print("3 Dispozins:            ");
+            System.out.println(((Girokonto)pKonto).getDispozins());
+            System.out.print("4 Dispo:                ");
+            System.out.println(((Girokonto)pKonto).getDispo());
+        }
+        else{
+            System.out.print("3 Sparzins:             ");
+            System.out.println(((Sparkonto)pKonto).getSparzins());
+        }
+
+        System.out.println();
+        System.out.println("5 Zurück zum Menü");
+        System.out.println();
+        System.out.println("Zum Ändern eines Wertes die entsprechende Zahl wählen");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String e = in.nextLine();
+
+        switch(e){
+            case ("1"):
+                System.out.println("Kontoinhaber angeben:");
+
+                // Eingaben auswerten
+                String name = in.nextLine();
+                // Eingabe nur gültig, wenn nur Text eingegeben wurde
+                while(!name.matches("[a-zA-Z ]+")) {
+                    System.out.println("Bitte einen gültigen Namen eingeben!");
+                    name = in.nextLine();
+                }
+                pKonto.setInhaber(name);
+                showEditKontoDialog(pKonto);
+                break;
+            case("2"):
+                System.out.println("Saldo angeben:");
+                while(!in.hasNextDouble()){
+                    System.out.println("Bitte einen gültigen Saldo angeben!");
+                    in.nextLine();
+                }
+                pKonto.setSaldo(in.nextDouble());
+                showEditKontoDialog(pKonto);
+                break;
+            case("3"):
+                System.out.println("Zinssatz angeben:");
+                while(!in.hasNextDouble()){
+                    System.out.println("Bitte einen gültigen Zinssatz angeben!");
+                    in.nextLine();
+                }
+                // Je nach Kontotyp das richtige Property ändern
+                if(pKonto.getClass().getName().equals("Kontoverwaltung.Girokonto")){
+                    ((Girokonto)pKonto).setDispozins(in.nextDouble());
+                }
+                else{
+                    ((Sparkonto)pKonto).setSparzins(in.nextDouble());
+                }
+                showEditKontoDialog(pKonto);
+                break;
+            case("4"):
+                System.out.println("Dispo angeben:");
+                while(!in.hasNextDouble()){
+                    System.out.println("Bitte einen gültigen Dispo angeben!");
+                    in.nextLine();
+                }
+                ((Girokonto)pKonto).setDispo(in.nextDouble());
+                showEditKontoDialog(pKonto);
+                break;
+            case("5"):
+                showMenu();
+            default:
+                System.out.println("Eingabe nicht erkannt!");
+                System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+                String s = in.nextLine();
+                showMenu();
+                break;
+        }
+
+    }
+
+    private static void showDeleteDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Bitte die Kontonummer des zu löschenden Kontos angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String nummer = in.nextLine();
+
+        // Ist das gesuchte Konto vorhanden?
+        Konto lKonto = null;
+
+        for(Konto konto : Konten){
+            if(konto.getKontonummer().equals(nummer)){
+                lKonto = konto;
+                break;
+            }
+        }
+        if(lKonto != null){
+            Konten.remove(lKonto);
+            System.out.println("Konto erfolgreich gelöscht");
+        }
+        else{
+            System.out.println("Gesuchtes Konto nicht vorhanden");
+        }
+
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String s = in.nextLine();
+        showMenu();
+
+    }
+
+    private static void showKontoauszugDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Bitte die Kontonummer angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String nummer = in.nextLine();
+
+        // Ist das gesuchte Konto vorhanden?
+        Konto lKonto = null;
+
+        for(Konto konto : Konten){
+            if(konto.getKontonummer().equals(nummer)){
+                lKonto = konto;
+                break;
+            }
+        }
+        if(lKonto != null){
+            lKonto.kontoauszug();
+        }
+        else{
+            System.out.println("Gesuchtes Konto nicht vorhanden");
+        }
+
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String s = in.nextLine();
+        showMenu();
+
+    }
+
+    private static void showTransactionDialog(){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Kontonummer des zu belastenden Kontos angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String nummer = in.nextLine();
+
+        // Ist das gesuchte Konto vorhanden?
+        Konto sender = null;
+
+        for(Konto konto : Konten){
+            if(konto.getKontonummer().equals(nummer)){
+                sender = konto;
+                break;
+            }
+        }
+        // Wenn nicht, brechen wir hier ab
+        if(sender == null){
+            System.out.println("Gesuchtes Konto nicht vorhanden");
+            System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+            String s = in.nextLine();
+            showMenu();
+        }
+
+        System.out.println("Kontonummer des zu begünstigen Kontos angeben:");
+        nummer = in.nextLine();
+        Konto receiver = null;
+
+        while(receiver == null){
+            // Empfänger suchen
+            for(Konto konto : Konten){
+                if(konto.getKontonummer().equals(nummer)){
+                    receiver = konto;
+                    break;
+                }
+            }
+            if(receiver == null){
+                System.out.println("Bitte eine gültige Kontonummer eingeben!");
+                nummer = in.nextLine();
+            }
+        }
+
+        // Wert erfragen
+        System.out.println("Betrag eingeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Betrag angeben!");
+            in.nextLine();
+        }
+        double value = in.nextDouble();
+
+        // Überweisung durchführen
+        sender.ueberweisung(receiver,value);
+
+        System.out.println();
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String s = in.nextLine();
+        showMenu();
+
+    }
+
+    private static void showAuszahlungDialog(boolean pEinzahlung){
+
+        // Anzeige leeren
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+
+        System.out.println("Bitte die Kontonummer angeben:");
+
+        // Eingaben auswerten
+        Scanner in = new Scanner(System.in);
+        String nummer = in.nextLine();
+
+        // Ist das gesuchte Konto vorhanden?
+        Konto lKonto = null;
+
+        for(Konto konto : Konten){
+            if(konto.getKontonummer().equals(nummer)){
+                lKonto = konto;
+                break;
+            }
+        }
+
+        // Wenn nicht, brechen wir hier ab
+        if(lKonto == null){
+            System.out.println("Gesuchtes Konto nicht vorhanden");
+            System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+            String s = in.nextLine();
+            showMenu();
+        }
+
+        // Prüfen ob wir überhaupt auszahlen dürfen
+        if(!lKonto.getClass().getName().equals("Kontoverwaltung.Girokonto")){
+            System.out.println("Das gewählte Konto ist kein Girokonto!");
+            System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+            String s = in.nextLine();
+            showMenu();
+        }
+
+        // Wert erfragen
+        System.out.println("Betrag eingeben:");
+        while(!in.hasNextDouble()){
+            System.out.println("Bitte einen gültigen Betrag angeben!");
+            in.nextLine();
+        }
+        double value = in.nextDouble();
+
+        // Müssen wir eine Auszahlung oder Einzahlung tätigen?
+        if(pEinzahlung){
+            // Einzahlung des gewählten Betrags
+            ((Girokonto)lKonto).Einzahlung(value);
+        }
+        else{
+            // Die tatsächliche Auszahlung
+            ((Girokonto)lKonto).Auszahlung(value);
+        }
+
+        System.out.println("Beliebige Einagbe um zum Menü zurückzukehren...");
+        String s = in.nextLine();
+        showMenu();
     }
 
 }

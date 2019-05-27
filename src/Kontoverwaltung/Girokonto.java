@@ -23,7 +23,7 @@ public class Girokonto extends Konto{
 
 
     // Führt eine Barauszahlung durch
-    // return 0 wenn Dispo überschritten ist, sonst ausgezahlter Betrag
+    // return false wenn Dispo überschritten ist, sonst ausgezahlter Betrag
     public boolean Auszahlung(double pBetrag) {
 
         int kontostand = (int)Math.round(this.Saldo - pBetrag*100);

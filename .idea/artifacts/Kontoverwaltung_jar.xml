@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Kontoverwaltung:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Kontoverwaltung_jar</output-path>
+    <root id="archive" name="Kontoverwaltung.jar">
+      <element id="module-output" name="Kontoverwaltung" />
+    </root>
+  </artifact>
+</component>
